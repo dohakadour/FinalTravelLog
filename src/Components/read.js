@@ -1,35 +1,31 @@
-// Import the Movies component, which will display the list of movies passed as props
-import { useEffect, useState } from "react";
-import Movies from "./movies";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import Movies from "./movies";
 
+function Read() {
+    const [data, setData] = useState([]);
 
-// The Read component, which serves as a container to display a list of movies
-const Read = ()=>{
-    // Data array containing movie details, including title, year, IMDB ID, type, and poster URL
-    //const data = [];
-    const [movies, setMovies] = useState([]); 
+    const Reload = () => {
+        console.log("Reloading movie data...");
+        axios.get('http://localhost:4000/api/movies')
+            .then((response) => {
+                setData(response.data);
+            })
+            .catch((error) => {
+                console.error("Error reloading data:", error);
+            });
+    };
 
     useEffect(() => {
-      axios.get('http://localhost:4000/api/movies')
-        .then((response) => {
-          setMovies(response.data.movies);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        Reload();
     }, []);
 
-
-    // JSX returned by the Read component
-    return(
+    return (
         <div>
-            <h1>
-                this is my read component
-            </h1>
-            {/* Pass the movie data to the Movies component as a prop called 'myMovies' */}
-            <Movies myMovies={movies} />
+            <h2>Movie List</h2>
+            <Movies myMovies={data} ReloadData={Reload} />
         </div>
     );
 }
+
 export default Read;

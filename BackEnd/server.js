@@ -35,6 +35,13 @@ const movieSchema = new mongoose.Schema({
     res.status(200).json({movies})
     }) ;
 
+
+
+    app.delete('/api/movie/:id', async (req, res) =>{
+      const movie = await movie.findByIdAndDelete(req.params.id);
+      res.status(200).send("Deleted: "+movie);
+    })
+
     
     app.put('/api/movie/:id', async (req, res) => {
         let movie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true });
