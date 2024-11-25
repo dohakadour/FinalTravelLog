@@ -18,20 +18,20 @@ function MovieItem(props) {
   
   }
   useEffect(() => {
-    console.log("Movie Item:", props.mymovie);
+    console.log("Movie Item:", props.myMovie);
   }, [props.mymovie]); // Only run this effect when the mymovie prop changes
 
   return (
     <div>
       <Card>
-        <Card.Header>{props.mymovie.Title}</Card.Header>
+        <Card.Header>{props.myMovie.title}</Card.Header>
         <Card.Body>
           <blockquote className="blockquote mb-0">
-            <img src={props.mymovie.poster} alt={props.mymovie.title} />
-            <footer>{props.mymovie.year}</footer>
+            <img src={props.myMovie.poster} alt={props.myMovie.title} />
+            <footer>{props.myMovie.year}</footer>
           </blockquote>
         </Card.Body>
-        <Link className="btn btn.primary" to={"/edit/"+props.mymovie._id}>Update</Link>
+        <Link className="btn btn.primary" to={"/edit/"+props.myMovie._id}>Update</Link>
         <Button variant="danger" onClick={handleDelete}>Delete</Button>
       </Card>
     </div>

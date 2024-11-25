@@ -9,7 +9,7 @@ function Read() {
         console.log("Reloading movie data...");
         axios.get('http://localhost:4000/api/movies')
             .then((response) => {
-                setData(response.data);
+                setData(response.data.movies);
             })
             .catch((error) => {
                 console.error("Error reloading data:", error);

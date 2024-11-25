@@ -38,7 +38,7 @@ const movieSchema = new mongoose.Schema({
 
 
     app.delete('/api/movie/:id', async (req, res) =>{
-      const movie = await movie.findByIdAndDelete(req.params.id);
+      const movie = await Movie.findByIdAndDelete(req.params.id);
       res.status(200).send("Deleted: "+movie);
     })
 
