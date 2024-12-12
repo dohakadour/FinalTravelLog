@@ -19,56 +19,92 @@ app.use(function(req, res, next) {
 
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://DohaKadour:Douha2001@cluster0.6acyn.mongodb.net/');
+mongoose.connect('mongodb+srv://DohaKadour:Douha@cluster0.6acyn.mongodb.net/');
 
-const movieSchema = new mongoose.Schema({
-    title: String,
-    year: String,
-    poster: String
-  });
+// Define the Trip schema
+const tripSchema = new mongoose.Schema({
+  title: String,
+  location: String,
+  startDate: Date,
+  endDate: Date,
+  activities: [String],
+  photos: [String],
+});
 
-  const Movie = new mongoose.model('myMovies',movieSchema);
+  // Create the Trip model
+const Trip = mongoose.model('trips', tripSchema);
  
 
-  app.get ('/api/movies', async (rea, res) => {
-    const movies = await Movie.find({});
-    res.status(200).json({movies})
-    }) ;
+// Get all trips
+app.get('/api/trips', async (req, res) => {
+  try {
+      const trips = await Trip.find({});
+      res.status(200).json({ trips });
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
 
 
 
-    app.delete('/api/movie/:id', async (req, res) =>{
-      const movie = await Movie.findByIdAndDelete(req.params.id);
-      res.status(200).send("Deleted: "+movie);
-    })
+    // Delete a trip
+app.delete('/api/trip/:id', async (req, res) => {
+  try {
+      const deletedTrip = await Trip.findByIdAndDelete(req.params.id);
+      if (!deletedTrip) {
+          return res.status(404).json({ message: 'Trip not found' });
+      }
+      res.status(200).json({ message: 'Trip deleted successfully' });
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
 
     
-    app.put('/api/movie/:id', async (req, res) => {
-        let movie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.send(movie);
-    });
+    // Update a trip
+app.put('/api/trip/:id', async (req, res) => {
+  try {
+      const updatedTrip = await Trip.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!updatedTrip) {
+          return res.status(404).json({ message: 'Trip not found' });
+      }
+      res.status(200).json({ message: 'Trip updated successfully', trip: updatedTrip });
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
 
-    app.get ('/api/movie/:id', async (req, res)=>{
-    const movie = await Movie. findById(req.params.id);
-    res. json (movie);
 
-    });
+    // Get a single trip by ID
+app.get('/api/trip/:id', async (req, res) => {
+  try {
+      const trip = await Trip.findById(req.params.id);
+      if (!trip) {
+          return res.status(404).json({ message: 'Trip not found' });
+      }
+      res.status(200).json(trip);
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
 
 
-  app.post('/api/movies', async (req, res)=>{
-console.log(req.body)
-    const { title, year, poster } = req.body;
-   console.log(title)
-    const newMovie = new Movie({ title, year, poster });
-    await newMovie.save();
-   
-    res.status(201).json({ message: 'Movie created successfully', movie: newMovie });
-    })
+  // Create a new trip
+app.post('/api/trips', async (req, res) => {
+  try {
+      const { title, location, startDate, endDate, activities, photos } = req.body;
+      const newTrip = new Trip({ title, location, startDate, endDate, activities, photos });
+      await newTrip.save();
+      res.status(201).json({ message: 'Trip created successfully', trip: newTrip });
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
 
 
 // Basic route to display a welcome message
 app.get('/', (req, res) => {
-    res.send('Welcome to Data Representation & Querying');
+  res.send('Welcome to the Travel Log API');
 });
 
 // app.get('/api/movies',(req, res)=>{
@@ -99,7 +135,7 @@ app.get('/', (req, res) => {
 //     res.status(200).json({ myMovies });
 // })
 
-app.post('/api/movies', (req, res)=>{
+app.post('/api/trips', (req, res)=>{
     console.log(req.body);
 })
 

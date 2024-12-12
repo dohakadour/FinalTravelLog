@@ -1,15 +1,15 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Movies from "./movies";
+import Trips from "./Trips";
 
 function Read() {
     const [data, setData] = useState([]);
 
     const Reload = () => {
-        console.log("Reloading movie data...");
-        axios.get('http://localhost:4000/api/movies')
+        console.log("Reloading trip data...");
+        axios.get('http://localhost:4000/api/trips')
             .then((response) => {
-                setData(response.data.movies);
+                setData(response.data.trips);
             })
             .catch((error) => {
                 console.error("Error reloading data:", error);
@@ -22,8 +22,8 @@ function Read() {
 
     return (
         <div>
-            <h2>Movie List</h2>
-            <Movies myMovies={data} ReloadData={Reload} />
+            <h2>Trip List</h2>
+            <Trips trips={data} ReloadData={Reload} />
         </div>
     );
 }
