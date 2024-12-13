@@ -23,9 +23,9 @@ useEffect(() => {
             const trip = response.data;
                 setTitle(trip.title);
                 setLocation(trip.location);
-                setStartDate(trip.startDate.slice(0, 10)); // Format date
-                setEndDate(trip.endDate.slice(0, 10)); // Format date
-                setPhotos(trip.photos.join(', ')); // Convert array to string
+                setStartDate(trip.startDate.slice(0, 10)); 
+                setEndDate(trip.endDate.slice(0, 10)); 
+                setPhotos(trip.photos.join(', ')); 
             })
         .catch((error) => {
             console.log(error);
