@@ -6,7 +6,7 @@ function Trips(props) {
             {props.trips.map((trip) => (
                 <TripItem
                     trip={trip}
-                    key={trip._id}  // Make sure `trip._id` exists in the backend data
+                    key={trip._id} 
                     Reload={props.ReloadData}  // Pass down the Reload function to each TripItem
                 />
             ))}
