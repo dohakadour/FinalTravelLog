@@ -21,7 +21,7 @@ function TripItem(props) {
   // Log the trip details when they change
   useEffect(() => {
     console.log("Trip Item:", props.trip);
-  }, [props.trip]); // Only run this effect when the mymovie prop changes
+  }, [props.trip]); // Only run this effect when the trips prop changes
 
   return (
     <div>
