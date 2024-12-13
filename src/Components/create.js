@@ -30,7 +30,7 @@ function Create() {
       formData.append('startDate', startDate);
       formData.append('endDate', endDate);
     
-      // Append photos (if any)
+      // Append photos 
       for (let i = 0; i < photos.length; i++) {
         formData.append('photos', photos[i]); 
       }
