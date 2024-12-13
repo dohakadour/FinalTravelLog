@@ -1,5 +1,3 @@
-// Header component to display a header message
-
 const Header = () => {
   return <div>
   <div className="container text-center mt-4">
