@@ -1,4 +1,3 @@
-// Import the necessary modules
 const express = require('express');
 const app = express();
 const port = 4000;
@@ -39,10 +38,10 @@ const Trip = mongoose.model('trips', tripSchema);
 // Multer setup to handle file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Ensure the 'uploads/' folder exists
+    cb(null, 'uploads/'); 
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Store files with unique names
+    cb(null, Date.now() + path.extname(file.originalname)); 
   }
 });
 
@@ -52,11 +51,11 @@ const upload = multer({ storage: storage });
 // Serve static files from the 'uploads' folder
 app.use('/uploads', express.static('uploads'));
 
-// API to create a trip with photos
+// create a trip
 app.post('/api/trips', upload.array('photos', 5), async (req, res) => {
   try {
     const { title, location, startDate, endDate } = req.body;
-    const photoPaths = req.files ? req.files.map(file => `/uploads/${file.filename}`) : [];
+    const photoPaths = req.files ? req.files.map(file => '/uploads/${file.filename}') : [];
 
     const newTrip = new Trip({
       title,
@@ -142,5 +141,5 @@ app.post('/api/trips', (req, res)=>{
 
 // Start the server and listen on the specified port
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log('Server is running on http://localhost:${port}');
 });
