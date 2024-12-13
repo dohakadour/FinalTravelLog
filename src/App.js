@@ -1,4 +1,3 @@
-// Importing Bootstrap CSS for stylingimport 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // Importing necessary components from 'react-router-dom' for routing in the app
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
