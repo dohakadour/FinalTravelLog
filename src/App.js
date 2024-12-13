@@ -9,7 +9,7 @@ import Content from './Components/header';
 import NavigationBar from './Components/NavigationBar';
 import Read from './Components/read';
 import Create from './Components/create';
-//import Header from './Components/header';
+import Header from './Components/header';
 import Edit from './Components/edit';
 
 
@@ -24,6 +24,7 @@ function App() {
       <Routes>
         {/* The 'Home' route will render the Content component */}
         <Route path="/Home" element={<Content />} />
+        <Route path="/Header" element={<Header />} />
         <Route path="/read" element={<Read />} />
         <Route path="/create" element={<Create />} />
         <Route path="/edit/:id" element={<Edit />} />

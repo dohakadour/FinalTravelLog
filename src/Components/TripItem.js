@@ -32,6 +32,7 @@ function TripItem(props) {
           <p><strong>Location:</strong> {props.trip.location}</p>
           <p><strong>Start Date:</strong> {new Date(props.trip.startDate).toLocaleDateString()}</p>
           <p><strong>End Date:</strong> {new Date(props.trip.endDate).toLocaleDateString()}</p>
+          {props.trip.photo && <img src={'http://localhost:4000${props.trip.photo}'} alt={props.trip.title} className="img-fluid" />}
           <footer className="blockquote-footer" />
           </blockquote>
         </Card.Body>

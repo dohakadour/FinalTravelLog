@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 const NavigationBar = () => {
   return (
-    <Navbar bg="primary" data-bs-theme="dark"> {/* Bootstrap Navbar with a primary background */}
-      <Navbar.Brand href="/">React App</Navbar.Brand> {/* Brand name in the Navbar */}
+    <Navbar bg="primary" variant="dark" expand="lg">
+      <Navbar.Brand href="/">Travel Log</Navbar.Brand> {/* Brand name in the Navbar */}
       <Nav className="mr-auto">
         {/* Links to different routes in the app */}
         <Nav.Link as={Link} to="/home">Home</Nav.Link>

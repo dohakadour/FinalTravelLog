@@ -1,50 +1,60 @@
 import { useState } from "react";
-
 import axios from 'axios';
 
 
 
-function create() {
+function Create() {
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [activities, setActivities] = useState('');
   const [photos, setPhotos] = useState('');
+
+   // Handle photo file changes
+   const handleFileChange = (e) => {
+    setPhotos(e.target.files); 
+  };
 
   const handleSubmit = (e) => {
       e.preventDefault();
 
       // Log form data to console
-      console.log(`Title: ${title}, Location: ${location}, Start Date: ${startDate}, End Date: ${endDate}, Activities: ${activities}, Photos: ${photos}`);
+      console.log('Title: ${title}, Location: ${location}, Start Date: ${startDate}, End Date: ${endDate}, Photos: ${photos}');
 
     
       
       // Prepare the trip object to send to the backend
-      const trip = {
-        title: title,
-        location: location,
-        startDate: startDate,
-        endDate: endDate,
-        activities: activities.split(',').map(activity => activity.trim()),
-        photos: photos.split(',').map(photo => photo.trim())
-    };
+    const formData = new FormData();
+      formData.append('title', title);
+      formData.append('location', location);
+      formData.append('startDate', startDate);
+      formData.append('endDate', endDate);
+    
+      // Append photos (if any)
+      for (let i = 0; i < photos.length; i++) {
+        formData.append('photos', photos[i]); 
+      }
+
 
     
-    axios.post('http://localhost:4000/api/trips', trip)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err.data));
-
-      
+    // Send the data to the backend via POST request
+    axios.post('http://localhost:4000/api/trips', formData)
+      .then((res) => {
+        console.log("Response:", res.data);
+      })
+      .catch((err) => {
+        console.log("Error:", err.response || err.message);
+      });
   };
 
   return (
     <div>
       <h2>Add a New Trip</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="form-group">
           <label>Trip Title: </label>
-          <input type="text"
+          <input
+            type="text"
             className="form-control"
             value={title}
             onChange={(e) => { setTitle(e.target.value) }}/>
@@ -78,11 +88,13 @@ function create() {
 
 
         <div className="form-group">
-          <label>Photos (comma-separated URLs):</label>
-          <input type="text"
+          <label>Photos (select one or more):</label>
+          <input
+            type="file"
             className="form-control"
-            value={photos}
-            onChange={(e) => setPhotos(e.target.value)}/>
+            multiple
+            onChange={handleFileChange} 
+          />
         </div>
 
 
@@ -92,4 +104,4 @@ function create() {
   );
 }
 
-export default create;
+export default Create;
