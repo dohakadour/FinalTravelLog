@@ -1,4 +1,3 @@
-// Content component to display a simple message and current time
 const Content = () => {
     return (
       <div>
